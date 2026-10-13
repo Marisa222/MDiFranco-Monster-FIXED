@@ -33,14 +33,21 @@ public class BattleMonster {
                 // check if there's a puppy
                 if(puppy != null){
                     // check if the puppy attacks
-                    johnWick();
+                    double r = Math.random();
+                    // 1 in 100 chance
+                    if (r < .01) johnWick();
                 }
-
                 // if no dog and no dog attack, roll for damage
-
-                // apply damage to first? monster
+                int damage = (int)(Math.random() * maxDmg);
+                findWeakest().takeDmg(damage);
             }
             // HEAL
+            else if(input.equals("heal")){
+                // (diff + 1) + min -> 10 - 100
+                int random = (int)(Math.random() * 91) + 10;
+                playerHealth += random;
+                System.out.println("You heal for " + random + " points. (Current health: " + playerHealth + ")");
+            }
 
             // MONSTERS TURN
             
@@ -58,6 +65,20 @@ public class BattleMonster {
             if(monsters[i] != null) return false;
         }
         return true;
+    }
+
+    public static Monster findWeakest(){
+        // grab the first non-null monster as our weakest
+        Monster result;
+        for(Monster m : monsters) if(m != null) result = m;
+        // look for a weaker monster
+        for(Monster m: monsters){
+            if(m != null && m.health() < result.health()){
+                result = m;
+            }
+        }
+        // return the weakest
+        return result;
     }
 
     /**
