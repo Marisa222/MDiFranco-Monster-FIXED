@@ -3,10 +3,7 @@ import java.util.ArrayList;
 
 import gui.MonsterBattleGUI;
 
-/**
- * Your game. GameDemo.java is a finished one to copy patterns from.
- * Fill in each TODO, and run this file after every change.
- */
+
 public class Game {
     
     // The window. You call its methods; you never need to open src/gui.
@@ -32,11 +29,10 @@ public class Game {
     // TODO: How much health, how many monsters, which items? Your choice.
     private void setupGame() {
         // Create the GUI
-        gui = new MonsterBattleGUI("Monster Battle - MY GAME");
+        gui = new MonsterBattleGUI("Marisa's Monster Battle");
         
-        // TODO: Setup player health
-        maxHealth = 100;  // Change this if you want
-        playerHealth = 100;
+        maxHealth = 100;
+        playerHealth = 75;
         gui.setPlayerMaxHealth(maxHealth);
         gui.updatePlayerHealth(playerHealth);
         
