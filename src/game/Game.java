@@ -13,6 +13,8 @@ public class Game {
     private ArrayList<Monster> monsters;
     private ArrayList<Item> inventory;
     private int playerHealth;
+    private int shield = 0;
+    private int SHIELD_UP = 20;
     private int maxHealth;
     
     public static void main(String[] args) {
@@ -26,7 +28,7 @@ public class Game {
         gameLoop();
     }
     
-    // TODO: How much health, how many monsters, which items? Your choice.
+    
     private void setupGame() {
         // Create the GUI
         gui = new MonsterBattleGUI("Marisa's Monster Battle");
@@ -36,17 +38,14 @@ public class Game {
         gui.setPlayerMaxHealth(maxHealth);
         gui.updatePlayerHealth(playerHealth);
         
-        // TODO: Create monsters - how many do you want?
         monsters = new ArrayList<>();
         monsters.add(new Monster());  // Add more monsters here!
-        monsters.add(new Monster());
         gui.updateMonsters(monsters);
         
         // TODO: Create starting items (GameDemo's addBomb() shows the shape)
         inventory = new ArrayList<>();
         gui.updateInventory(inventory);
         
-        // TODO: Customize button labels
         String[] buttons = {"Attack", "Defend", "Heal", "Use Item"};
         gui.setActionButtons(buttons);
         
@@ -102,17 +101,30 @@ public class Game {
     
     // TODO: How much damage, and to which monster?
     private void attackMonster() {
-        gui.displayMessage("TODO: Implement attack!");
-    }
+        gui.displayMessage("JOHN WICK!");
+        for(Monster m : monsters){
+            // kill each one
+            if(m != null) m.takeDamage(m.health());
+
+                
+            }
+        }
     
-    // TODO: What does defending change? Less damage next turn? A blocked hit?
     private void defend() {
-        gui.displayMessage("TODO: Implement defend!");
+        shield += SHIELD_UP;
+        gui.displayMessage("SHIELD UP! Current Shield: " + shield);
     }
     
-    // TODO: How much health back, and can it go past maxHealth?
     private void heal() {
-        gui.displayMessage("TODO: Implement heal!");
+        // random number 0 - 40
+        int healNumber = 0; // WRONG
+        playerHealth += healNumber;
+        if(playerHealth > maxHealth){
+            maxHealth = playerHealth;
+            gui.setPlayerMaxHealth(maxHealth);
+        }
+        gui.updatePlayerHealth(playerHealth);
+        gui.displayMessage("You healed for " + healNumber + "points!");
     }
     
     // Uses the first item in the inventory.

@@ -78,7 +78,7 @@ public class BattleMonster {
     
     /**
      * Checks for any monsters
-     * @return true if no monsters are in the monsers array
+     * @return true if no monsters are in the monsters array
      */
     public static boolean noMonsters() {
         // loop and check for monsters
