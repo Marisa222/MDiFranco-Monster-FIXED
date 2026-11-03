@@ -1,6 +1,6 @@
 package gui;
-import javax.swing.*;
 
+import javax.swing.*;
 import game.Item;
 import game.Monster;
 
@@ -11,18 +11,7 @@ import java.util.ArrayList;
 /**
  * MonsterBattleGUI - A simple display API for monster battle games
  * 
- * This class provides methods to display your game state.
- * You control the game loop - just call these methods to update the display!
- * 
- * STUDENT API METHODS:
- * - updateMonsters(ArrayList<Monster>) - Show current monsters
- * - updatePlayerHealth(int) - Show player health
- * - setPlayerSpeed(int) - Set player speed stat
- * - updateInventory(ArrayList<Item>) - Show items
- * - displayMessage(String) - Show a message
- * - setActionButtons(String[]) - Label the 4 buttons
- * - waitForAction() - Wait for button click, returns 0-3
- * - highlightMonster(int) - Highlight a monster briefly
+ * Styled with a bioluminescent deep-sea jellyfish theme.
  */
 public class MonsterBattleGUI extends JFrame {
     
@@ -37,6 +26,9 @@ public class MonsterBattleGUI extends JFrame {
     private int selectedAction = -1;
     private boolean waitingForInput = false;
     private final Object actionLock = new Object();
+    
+    // Jellyfish Theme Constants
+    private static final Color ABYSS_BG = new Color(11, 19, 43);
     
     /**
      * Constructor
@@ -70,13 +62,18 @@ public class MonsterBattleGUI extends JFrame {
      */
     private void layoutComponents() {
         setLayout(new BorderLayout(10, 10));
+        getContentPane().setBackground(ABYSS_BG);
         
         // Center: Monsters
         add(monsterPanel, BorderLayout.CENTER);
         
         // Bottom: Player status, buttons, messages
         JPanel bottomPanel = new JPanel(new BorderLayout(10, 10));
+        bottomPanel.setBackground(ABYSS_BG);
+        
         JPanel controlPanel = new JPanel(new BorderLayout(10, 10));
+        controlPanel.setBackground(ABYSS_BG);
+        
         controlPanel.add(playerStatusPanel, BorderLayout.NORTH);
         controlPanel.add(buttonPanel, BorderLayout.CENTER);
         bottomPanel.add(controlPanel, BorderLayout.CENTER);

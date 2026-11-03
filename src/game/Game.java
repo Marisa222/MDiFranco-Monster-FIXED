@@ -99,7 +99,7 @@ public class Game {
         }
     }
     
-    // TODO: How much damage, and to which monster?
+    
     private void attackMonster() {
         gui.displayMessage("JOHN WICK!");
         for(Monster m : monsters){
@@ -119,12 +119,13 @@ public class Game {
         // random number 0 - 40
         int healNumber = 0; // WRONG
         playerHealth += healNumber;
+        // SUPER HEAL?
         if(playerHealth > maxHealth){
             maxHealth = playerHealth;
             gui.setPlayerMaxHealth(maxHealth);
         }
         gui.updatePlayerHealth(playerHealth);
-        gui.displayMessage("You healed for " + healNumber + "points!");
+        gui.displayMessage("You healed for " + healNumber + " points!");
     }
     
     // Uses the first item in the inventory.
