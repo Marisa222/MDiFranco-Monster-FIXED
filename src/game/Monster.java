@@ -45,10 +45,7 @@ public class Monster {
 
     public void jan6(ArrayList<Monster> monsters, MonsterBattleGUI gui){
         gui.displayMessage("Let's go beserk! It's gonna be wild!");
-        for(Monster m : monsters){
-            m.twoFast2furious(gui);
-            
-        }
+        for(Monster m : monsters){ m.twoFast2furious(gui);}
     }
 
     // beserker mode

@@ -116,8 +116,7 @@ public class Game {
     }
     
     private void heal() {
-        // random number 0 - 40
-        int healNumber = 0; // WRONG
+        int healNumber = 20; // WRONG
         playerHealth += healNumber;
         // SUPER HEAL?
         if(playerHealth > maxHealth){
@@ -143,8 +142,13 @@ public class Game {
     
     // TODO: Which monster attacks, and for how much? A special move goes here.
     private void monsterAttack() {
-        gui.displayMessage("TODO: Implement monster attack!");
+        Monster monster = getRandomLivingMonster(); // TODO: be smarter. ONly one monster gets a turn?
+        playerHealth -= monster.damage();
+        gui.displayMessage("Monster hits for " + monster.damage());
+        gui.updatePlayerHealth(playerHealth);
+        
     }
+
     
     // Helpers. Add your own below these two.
     private int countLivingMonsters() {
