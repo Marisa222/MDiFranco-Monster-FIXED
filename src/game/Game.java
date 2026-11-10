@@ -27,19 +27,27 @@ public class Game {
         setupGame();
         gameLoop();
     }
+
+    // ACCESORS
+    public MonsterBattleGUI getGUI() { return gui; }
+    public ArrayList<Monster> getMonsters() { return monsters; }
     
     
     private void setupGame() {
         // Create the GUI
         gui = new MonsterBattleGUI("Marisa's Monster Battle");
         
+        // TODO: Difficulty selection
+
         maxHealth = 100;
         playerHealth = 75;
         gui.setPlayerMaxHealth(maxHealth);
         gui.updatePlayerHealth(playerHealth);
         
         monsters = new ArrayList<>();
-        monsters.add(new Monster());  // Add more monsters here!
+        monsters.add(new Monster(this));
+        monsters.add(new Monster (this, "pfundstein"));
+        monsters.add(new Monster (this, "Quaffle"));
         gui.updateMonsters(monsters);
         
         // TODO: Create starting items (GameDemo's addBomb() shows the shape)
@@ -101,17 +109,22 @@ public class Game {
     
     
     private void attackMonster() {
-        gui.displayMessage("JOHN WICK!");
-        for(Monster m : monsters){
-            // kill each one
-            if(m != null) m.takeDamage(m.health());
+        Monster target = getRandomLivingMonster();
 
+        // determine my damage
+        int damage = (int)(Math.random() * 10 + 10);
+        // apply damage
+        target.takeDamage(damage);
+        // show message
+        gui.displayMessage("Hit for " + damage);
+        
                 
             }
-        }
+        
     
     private void defend() {
         shield += SHIELD_UP;
+        // EXTRA CREDIT: show shield on the GUI
         gui.displayMessage("SHIELD UP! Current Shield: " + shield);
     }
     
@@ -140,13 +153,13 @@ public class Game {
         item.use();  // The item knows what to do!
     }
     
-    // TODO: Which monster attacks, and for how much? A special move goes here.
+    
     private void monsterAttack() {
-        Monster monster = getRandomLivingMonster(); // TODO: be smarter. ONly one monster gets a turn?
+        Monster monster = getRandomLivingMonster();
         playerHealth -= monster.damage();
         gui.displayMessage("Monster hits for " + monster.damage());
         gui.updatePlayerHealth(playerHealth);
-        
+
     }
 
     

@@ -1,18 +1,17 @@
 package game;
 
-import java.util.ArrayList;
-
-import gui.MonsterBattleGUI;
 
 public class Monster {
     // INSTANCE VARIABLES (properties)
     private int health;
     private double damage;
     private int speed;
-    private String special; 
+    private String special;
+    private Game game;
 
     // CONSTRUCTOR
-    public Monster(){
+    public Monster(Game game){
+        this.game = game;
         // randomly generate health, damage, speed
         health = (int)(Math.random() * 80 + 1) + 20;
         // random 10 - 50
@@ -23,14 +22,26 @@ public class Monster {
         special = "";
     }
     // OVERLOADED CONSTRUCTOR
-    public Monster(String special){
-        this();
+    public Monster(Game game, String special){
+        this(game);
         this.special = special;
+        if(special.equals("pfundstein")) {
+            game.getGUI().displayMessage("Keep leading... to your DOOM!");
+        }
+        if(special.equals("Quaffle")) {
+            game.getGUI().displayMessage("MEOW!");
+        }
+
     }
     
     // ACCESSOR METHODS
     public int health() { return this.health; }
-    public double damage() { return Math.round(damage * 100.0) / 100.0; }
+    public double damage() { 
+        if(special.equals("pfundstein")) {
+            game.getGUI().displayMessage("Where's your YONDER!?");
+        }
+        return Math.round(damage * 100.0) / 100.0;
+    }
     public int speed() { return speed; }
     public String special() { return this.special; }
 
@@ -43,13 +54,15 @@ public class Monster {
         friend.heal(heal);
     }
 
-    public void jan6(ArrayList<Monster> monsters, MonsterBattleGUI gui){
-        gui.displayMessage("Let's go beserk! It's gonna be wild!");
-        for(Monster m : monsters){ m.twoFast2furious(gui);}
+    public void enrage(){
+        game.getGUI().displayMessage("Let's go beserk! It's gonna be wild!");
+        for(Monster m : game.getMonsters()){
+            m.twoFast2furious();
+        }
     }
 
     // beserker mode
-    public void twoFast2furious(MonsterBattleGUI gui){
+    public void twoFast2furious(){
         // lowers health to 25%, not less than 5
         health /= 4;
         if(health < 5) health = 5;
@@ -58,6 +71,6 @@ public class Monster {
         damage *= 4;
         speed *= 4;
         // can we post a message?
-        gui.displayMessage("WRAWRR!!");
+        game.getGUI().displayMessage("WRAWRR!!");
     }
 }
