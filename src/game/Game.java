@@ -37,7 +37,8 @@ public class Game {
         // Create the GUI
         gui = new MonsterBattleGUI("Marisa's Monster Battle");
         
-        // TODO: Difficulty selection
+
+        int numMonsters = chooseDifficulty();
 
         maxHealth = 100;
         playerHealth = 75;
@@ -45,9 +46,11 @@ public class Game {
         gui.updatePlayerHealth(playerHealth);
         
         monsters = new ArrayList<>();
-        monsters.add(new Monster(this));
-        monsters.add(new Monster (this, "pfundstein"));
-        monsters.add(new Monster (this, "Quaffle"));
+        for (int i = 0; i < numMonsters; i++) {
+            monsters.add(new Monster(this));
+            monsters.add(new Monster (this, "pfundstein"));
+            monsters.add(new Monster (this, "Quaffle"));
+        }
         gui.updateMonsters(monsters);
         
         // TODO: Create starting items (GameDemo's addBomb() shows the shape)
@@ -61,6 +64,25 @@ public class Game {
         gui.displayMessage("Battle Start! Choose your action.");
     }
     
+    // Difficulty
+
+    private int chooseDifficulty(){
+        String[] difficulties = {"Easy (2)", "Medium (3)", "Hard (4)", "Extreme (5)"};
+        gui.setActionButtons(difficulties);
+
+        gui.displayMessage("CHOOSE YOUR DIFFICULTY:");
+
+        int choice = gui.waitForAction();
+
+        int numMonsters = 1 + choice;
+
+        gui.displayMessage("Difficulty selected: " + difficulties[choice] + " monsters!");
+        gui.pause(1500);
+        
+        return numMonsters;
+    }
+
+
     // Player turn, then monster turn, until one side is gone.
     private void gameLoop() {
         // Keep playing while monsters alive and player alive
@@ -156,8 +178,18 @@ public class Game {
     
     private void monsterAttack() {
         Monster monster = getRandomLivingMonster();
-        playerHealth -= monster.damage();
-        gui.displayMessage("Monster hits for " + monster.damage());
+        double incomingDamage = monster.damage();
+        if(shield > 0){
+            // reduce the incoming damage by shield
+            if(shield > incomingDamage){
+                gui.displayMessage("Your shield blocked the attack.");
+            }else {
+                incomingDamage -= shield;
+                gui.displayMessage("Your shield took " + incomingDamage);
+            }
+        }
+        playerHealth -= incomingDamage;
+        gui.displayMessage("Monster hits for " + incomingDamage);
         gui.updatePlayerHealth(playerHealth);
 
     }
